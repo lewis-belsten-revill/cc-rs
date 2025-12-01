@@ -2916,7 +2916,7 @@ impl Build {
                     let prefix = self.prefix_for_target(&raw_target);
                     match prefix {
                         Some(prefix) => {
-                            let cc = if target.abi == "llvm" { clang } else { gnu };
+                            let cc = if target.abi == "llvm" || raw_target.starts_with("riscv64cheri") { clang } else { gnu };
                             format!("{prefix}-{cc}")
                         }
                         None => default.to_string(),
