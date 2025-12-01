@@ -3530,6 +3530,7 @@ impl Build {
                     "riscv32gc-unknown-linux-gnu" => Some("riscv32-linux-gnu"),
                     "riscv64gc-unknown-linux-musl" => Some("riscv64-linux-musl"),
                     "riscv32gc-unknown-linux-musl" => Some("riscv32-linux-musl"),
+                    "riscv64cheri-codasip-linux-musl" => Some("riscv64-codasip-linux-musl"),
                     "riscv64gc-unknown-netbsd" => Some("riscv64--netbsd"),
                     "s390x-unknown-linux-gnu" => Some("s390x-linux-gnu"),
                     "sparc-unknown-linux-gnu" => Some("sparc-linux-gnu"),
