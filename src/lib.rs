@@ -2233,6 +2233,14 @@ impl Build {
                         );
                         cmd.push_cc_arg("-pthread".into());
                     }
+
+                    if target.arch.starts_with("riscv64") {
+                        if target.vendor == "codasip" && target.full_arch.contains("cheri") {
+                            cmd.args.push("-mcpu=codasip-x730-spark".into());
+                            cmd.args.push("-mabi=l64pc128d".into());
+                        }
+                    }
+
                     // Pass `--target` with the LLVM target to configure Clang for cross-compiling.
                     //
                     // This is **required** for cross-compilation, as it's the only flag that
@@ -2457,11 +2465,14 @@ impl Build {
                         cmd.args.push("-mfpu=vfpv3-d16".into());
                     }
                 }
-                if target.arch == "riscv32" || target.arch == "riscv64" {
+                if target.arch.starts_with("riscv") {
                     // get the 32i/32imac/32imc/64gc/64imac/... part
                     let arch = &target.full_arch[5..];
                     if arch.starts_with("64") {
-                        if matches!(target.os, "linux" | "freebsd" | "netbsd") {
+                        if target.vendor == "codasip" && arch.contains("cheri") {
+                            cmd.args.push("-mcpu=codasip-x730-spark".into());
+                            cmd.args.push("-mabi=l64pc128d".into());
+                        } else if matches!(target.os, "linux" | "freebsd" | "netbsd") {
                             cmd.args.push(("-march=rv64gc").into());
                             cmd.args.push("-mabi=lp64d".into());
                         } else {
